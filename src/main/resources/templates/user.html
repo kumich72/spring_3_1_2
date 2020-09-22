@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>
+        User information page
+    </title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<div class="container-fluid">
+    <div class="row bg-dark text-white">
+        <div class="col-5">
+            <th:block>
+                <span class="font-weight-bold" th:text="${currentUser.getName()}"></span>
+            </th:block>
+            <span> with roles :</span>
+            <th:block th:each="roleCurrentUser : ${rolesCurrentUser}">
+                <span th:text="${roleCurrentUser.getName()}"></span>
+            </th:block>
+        </div>
+        <div class="col-6">
+        </div>
+        <div class="col">
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <th:block th:each="roleCurrentUser, iStat : ${rolesCurrentUser}">
+                    <a class="nav-link active" th:if="${iStat.index}==0"
+                       th:id="'v-pills-' + ${roleCurrentUser.getName()} +'-tab'"
+                       data-toggle="pill"
+                       th:attr="href='#v-pills-'+${roleCurrentUser.getName()},
+                       aria-controls='v-pills-'+${roleCurrentUser.getName()},
+                       aria-selected=''+${iStat.index}==0"
+                       role="tab"
+                       th:value="${roleCurrentUser.getName()}">
+                        <span th:text="${roleCurrentUser.getName()}"></span></a>
+                    <a class="nav-link" th:if="${iStat.index}>0"
+                       th:id="'v-pills-' + ${roleCurrentUser.getName()} +'-tab'"
+                       data-toggle="pill"
+                       th:attr="href='#v-pills-'+${roleCurrentUser.getName()},
+                       aria-controls='v-pills-'+${roleCurrentUser.getName()},
+                       aria-selected=''+${iStat.index}==0"
+                       role="tab"
+                       th:value="${roleCurrentUser.getName()}">
+                        <span th:text="${roleCurrentUser.getName()}"></span></a>
+                </th:block>
+            </div>
+        </div>
+        <div class="col-10">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-USER" role="tabpanel" aria-labelledby="v-pills-USER">
+                    <h3>User information-page</h3>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="container-fluid">
+                                <table class="table table-striped">
+                                    <caption style="caption-side: top;">About user</caption>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Role</th>
+                                    </tr>
+                                    <tr>
+                                        <td  scope="row" th:text="${currentUser.getId()}"></td>
+                                        <td th:text="${currentUser.getName()}"></td>
+                                        <td th:text="${currentUser.getEmail()}"></td>
+                                        <td>
+                                            <th:block th:each="role : ${rolesCurrentUser}">
+                                                <label th:text="${role.name}"></label>
+                                            </th:block>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
